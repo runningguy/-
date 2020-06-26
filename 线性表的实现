@@ -1,0 +1,76 @@
+#include<iostream>
+#include<malloc.h>
+#include<stdio.h>
+using namespace std;
+
+const int MaxSize = 100;
+typedef struct LNode* List;
+//线性表的结构体构造
+struct LNode
+{
+    //元素
+    int date[MaxSize];
+    //长度
+    int last;
+
+};
+List L;
+//链表一些操作函数的声明
+List Make();//链表的初始化
+void insert(int a, int b, List L);//链表的插入
+void Delete(int a, List L);//链表的删除,
+void print(List L);//链表的输出
+
+
+
+
+void Delete(int a, List L) {
+    if (a<0 || a>L->last)
+        cout << "无效操作";
+    for (int i = a + 1; i <= L->last; i++)
+    {
+        L->date[i - 1] = L->date[i];
+    }
+        L->last--;
+}
+
+List Make()
+{
+    List L;
+    L = (List)malloc(sizeof(struct LNode));
+    L->last= -1;
+    return L;
+}
+//2.线性表中数据的插入
+void insert(int a, int b, List L) {
+    if (L->last > MaxSize - 1)
+        cout << "表已满" << endl;
+    if (a<0 || a>MaxSize)
+        cout << "无效位置" << endl;
+    for (int i = L->last; i > a - 1; i--)
+    {
+        L->date[i + 1] = L->date[i];
+    }
+    L->date[a] = b;
+    L->last++;
+}
+void print(List L)
+{
+    cout << "表中元素为";
+    for (int i = 0; i <= L->last; i++)
+        cout << L->date[i] << "  ";
+    cout << endl;
+}
+
+int main()
+{
+    L = Make();
+    insert(0, 2, L);
+    insert(1, 5, L);
+    insert(2, 10, L);
+    print(L);
+    Delete(1, L);
+    print(L);
+    Delete(-1, L);
+    return 0;
+}
